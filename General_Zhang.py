@@ -22,4 +22,16 @@ for index, row in enumerate(info_rows):
         dict_value = row.find("td").get_text(" ", strip=True).replace("\xa0", " ").replace("†", "（殉国）")
         General_info[dict_key] = dict_value
 
-print(General_info)
+
+from openpyxl import Workbook, load_workbook
+
+wb = Workbook()
+ws = wb.active
+ws.title = "general_info"
+
+heading = [k for k in General_info.keys()]
+
+ws.append(heading)
+ws.append([v for v in General_info.values()])
+
+wb.save("general_info.xlsx")
